@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+<h3> Вывод списка пользователей</h3>
+{% block content %}
+
+
+    <table>
+        <tr>
+
+
+            <th>id пользователя</th>
+            <th>Имя </th>
+            <th>Возраст </th>
+            <th>Email </th>
+            <th>Дата регистрации</th>
+
+
+        </tr>
+
+        {% for user in users %}
+
+            <tr>
+                <td>{{ user[1] }} </td>
+                <td> {{ user[2] }}</td>
+                <td> {{ user[3] }}</td>
+                <td> {{ user[4] }}</td>
+             <td> {{ user[6] }}</td>
+            </tr>
+
+
+        {% endfor %}
+    </table>
+
+
+
+{% endblock %}

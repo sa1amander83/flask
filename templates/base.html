@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Домашка по модулю №2</h1>
+    <h2>Выберите интересующий вас пункт меню:</h2>
+    <ul>
+        <a href="{{ url_for ('index') }}">
+            <li>Главная</li>
+        </a>
+
+        <a href="{{ url_for ('adduser') }}">
+            <li>Добавить пользователя</li>
+        </a>
+        <a href="{{ url_for ('change') }}">
+            <li>Изменить пароль</li>
+        </a>
+        <a href="{{ url_for ('print_users') }}">
+            <li>Вывести список пользователей</li>
+        </a>
+        <a href="{{ url_for ('quit') }}">
+            <li>Выход</li>
+        </a>
+
+    </ul>
+
+ <div class="content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    </div>
+        {% block content %}
+            <h3> Добро пожаловать!</h3>
+        {% endblock %}
+    </div>
+</body>
+</html>
