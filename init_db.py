@@ -5,7 +5,7 @@ conn = psycopg2.connect(
     host="localhost",
     database="flask_db",
     user="postgres",
-    password="123"
+    password="root"
 )
 
 # Open a cursor to perform database operations
@@ -14,7 +14,6 @@ cur = conn.cursor()
 # Execute a command: this creates a new table
 cur.execute('DROP TABLE IF EXISTS users;')
 cur.execute('CREATE TABLE users (id serial PRIMARY KEY,'
-            'userid integer NOT NULL,'
             'name varchar (50) NOT NULL,'
             'age integer NOT NULL,'
             'password varchar(50) NOT NULL,'
