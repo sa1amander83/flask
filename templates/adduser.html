@@ -18,12 +18,14 @@
 
 {#{% else %}#}
 
-    <form method="post" action="{{ url_for('adduserform') }}" id="userform">
+<form method="post" action="{{ url_for('adduserform') }}" id="userform">
 {% if passform %}
 
         <button type="submit" name="submit_button" value="yes"> ДА</button>
         <button type="submit" name="submit_button" value="no"> НЕТ</button>
            {% endif %}
+
+ <form method="post" action="{{ url_for('adduserform') }}" id="userform">
         <label for="userid">ID пользователя:</label>
         <br>
         <input type="number" name="userid" id="userid"
@@ -56,8 +58,8 @@
         <label for="password">Пароль пользователя:</label>
         <br>
         <input type="password"
-               placeholder="********" id="password" name="password"/>
-        {#           value="{{ request.form['password'] }}"/>#}
+               placeholder="********" id="password" name="password"
+                   value="{{ request.form['password'] }}"/>
         <br>
 
 
