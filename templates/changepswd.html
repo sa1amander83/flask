@@ -5,5 +5,28 @@
 {% endblock %}
 
 {% block content %}
-форма  вывода для смены пароля
-{%   endblock%}
+
+
+  <form method="post" action="{{ url_for('change') }}" id="changeform">
+  {% if change %}
+  <label for="updatepass">ВВедите новый пароль:</label>
+        <br>
+        <input type="text" name="updatepass" id="updatepass"
+               placeholder=" "
+               value="{{ request.form['newpass'] }}"/>
+        <br>
+
+        <button type="submit" name="button_submit"  value="updatepass">Обновить пароль</button>
+
+    {% else %}
+        <label for="username">Введите имя пользователя, которому хотите поменять пароль:</label>
+        <br>
+        <input type="text" name="username" id="username"
+               placeholder=" "
+               value="{{ request.form['username'] }}"/>
+        <br>
+
+        <button type="submit" name="button_submit" value="userinput">Ввод пользователя</button>
+  </form>
+       {% endif %}
+{%   endblock %}

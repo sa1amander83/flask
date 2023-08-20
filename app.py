@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = '412478680b3d5c11192483aaae6ea695035286f657da298c'
 app.debug = True
-
+messages = []
 
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
@@ -42,10 +42,24 @@ def adduserform():
         userid = request.form.get('userid')
         username = request.form.get('username')
         email = request.form.get('email')
+        email = "" if not email else email
         userage = request.form.get('age')
         password = request.form.get('password')
-        register_date= datetime.now()
-        messages = []
+        register_date = datetime.now()
+
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM users;')
+        users = cur.fetchall()
+
+        for user in users:
+            if user[0] == int(userid):
+                messages.append('Пользователь с таким id уже есть в списке')
+            if user[1] == username:
+                messages.append('пользователь  с таким именем уже есть в списке')
+            if user[4] == email:
+                messages.append('пользователь c таким email уже есть в списке')
 
         if not userid:
             messages.append('Вы не ввели id пользователя')
@@ -67,18 +81,6 @@ def adduserform():
             messages.append('Вы не ввели пароль')
             # flash('Введите пароль')
 
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM users;')
-        users = cur.fetchall()
-        for user in users:
-            print(user)
-            if user[1] == int(userid):
-                messages.append('Пользователь с таким id уже есть в списке')
-            if user[2] == username:
-                messages.append('пользователь  с таким именем уже есть в списке')
-            if user[5] == email:
-                messages.append('пользователь c таким email уже есть в списке')
             # else:
             #     return render_template('adduser.html', messages=messages)
             # return render_template('adduser.html', messages=messages)
@@ -132,8 +134,8 @@ def adduserform():
             cur = conn.cursor()
             cur.execute('INSERT into users(id,name,age,password,email, date_register)'
                         'VALUES (%s, %s, %s, %s,%s,%s)',
-                        (userid,username,userage, password,email, register_date)
-                                )
+                        (userid, username, userage, password, email, register_date)
+                        )
             conn.commit()
             return render_template('success.html')
 
@@ -164,8 +166,25 @@ def print_users():
     return render_template('print.html', users=users)
 
 
-@app.route('/change/')
+@app.route('/change/', methods=['GET', 'POST'])
+@cross_origin(origin='localhost', headers=['Content- Type', '*'])
 def change():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT name FROM users;')
+        users = cur.fetchall()
+        for user in users:
+            print(user[0])
+            if user[0] == username:
+                return render_template('changepswd.html', change=True)
+        else:
+            flash("пользователь  с таким именем не найден, попробуйте еще раз")
+
+        if request.form['submit_button'] == 'updatepass':
+            return render_template('success.html', update=True)
+
     return render_template('changepswd.html')
 
 

@@ -26,7 +26,7 @@
            {% endif %}
         <label for="userid">ID пользователя:</label>
         <br>
-        <input type="text" name="userid" id="userid"
+        <input type="number" name="userid" id="userid"
                placeholder="ID "
                value="{{ request.form['userid'] }}"/>
         <br>
@@ -48,7 +48,7 @@
 
         <label for="age">Возраст пользователя:</label>
         <br>
-        <input type="text"
+        <input type="number"
                placeholder="возраст" id="age" name="age"
                value="{{ request.form['age'] }}"/>
         <br>
@@ -61,8 +61,7 @@
         <br>
 
 
-        <button type="submit">Ввод пользователя</button>
+        <button type="submit" >Ввод пользователя</button>
     </form>
 {#    {% endif %}#}
 {% endblock %}
-
