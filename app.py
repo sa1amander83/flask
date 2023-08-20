@@ -183,6 +183,11 @@ def change():
             flash("пользователь  с таким именем не найден, попробуйте еще раз")
 
         if request.form['submit_button'] == 'updatepass':
+            newpass=request.form.get('updatepass')
+            cur.execute('UPDATE users set password:=newpass;'
+                        'WHERE name:=userame')
+            conn.commit()
+            conn.close()
             return render_template('success.html', update=True)
 
     return render_template('changepswd.html')
