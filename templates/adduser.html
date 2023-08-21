@@ -1,52 +1,64 @@
 {% extends 'base.html' %}
-
+    <h3> Добавление нового пользователя</h3>
 
 {% block content %}
 
-
-    <h3> Добавление нового пользователя</h3>
-
-    <form method="post" action="{{ url_for('adduserform') }}" id="userform">
-
-    <label for="userid">ID пользователя:</label>
-    <br>
-    <input type="text" name="userid" id="userid"
-           placeholder="ID "
-           value="{{ request.form['userid'] }}"/>
-    <br>
-
-    <label for="username">Имя пользователя:</label>
-    <br>
-    <input type="text" id="username" name="username"
-           placeholder="имя "
-           value="{{ request.form['username'] }}"/>
-    <br>
-
-
-    <label for="email">Email пользователя:</label>
-    <br>
-    <input type="email"
-           placeholder="Email" id="email" name="email"
-           value="{{ request.form['Email'] }}"/>
-    <br>
-
-    <label for="age">Возраст пользователя:</label>
-    <br>
-    <input type="text"
-           placeholder="возраст" id="age" name="age"
-           value="{{ request.form['username'] }}"/>
-    <br>
-
-<label for="password">Пароль пользователя:</label>
-    <br>
-    <input type="password"
-           placeholder="******" id="password"/>
-{#           value="{{ request.form['password'] }}"/>#}
-    <br>
+    {% for message in messages %}
+        <p style="background-color: #fc4040; width: 300px"> {{ message }}</p>
+    {% endfor %}
 
 
 
-    <button type="submit">Ввод пользователя</button>
+
+
+
+<form method="post" action="{{ url_for('adduserform') }}" id="userform">
+{% if passform %}
+
+        <button type="submit" name="submit_button" value="yes"> ДА</button>
+        <button type="submit" name="submit_button" value="no"> НЕТ</button>
+
+           {% endif %}
+
+ <form method="post" action="{{ url_for('adduserform') }}" id="userform">
+        <label for="userid">ID пользователя:</label>
+        <br>
+        <input type="number" name="userid" id="userid"
+               placeholder="ID "
+               value="{{ request.form['userid'] }}"/>
+        <br>
+
+        <label for="username">Имя пользователя:</label>
+        <br>
+        <input type="text" id="username" name="username"
+               placeholder="имя "
+               value="{{ request.form['username'] }}"/>
+        <br>
+
+
+        <label for="email">Email пользователя:</label>
+        <br>
+        <input type="email"
+               placeholder="Email" id="email" name="email"
+               value="{{ request.form['email'] }}"/>
+        <br>
+
+        <label for="age">Возраст пользователя:</label>
+        <br>
+        <input type="number"
+               placeholder="возраст" id="age" name="age"
+               value="{{ request.form['age'] }}"/>
+        <br>
+
+        <label for="password">Пароль пользователя:</label>
+        <br>
+        <input type="password"
+               placeholder="********" id="password" name="password"
+                   value="{{ request.form['password'] }}"/>
+        <br>
+
+
+        <button type="submit" >Ввод пользователя</button>
     </form>
-{% endblock %}
 
+{% endblock %}

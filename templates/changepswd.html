@@ -1,9 +1,55 @@
 {% extends 'base.html' %}
-{% block title %} 
-Сменить пароль пользователя
+{% block title %}
+    Сменить пароль пользователя
 
 {% endblock %}
 
 {% block content %}
-форма  вывода для смены пароля
-{%   endblock%}
+
+
+
+    {% if change %}
+
+        <form method="post" action="{{ url_for('updatepass', username=user) }}" id="updateform">
+        {% if update %}
+
+                <input type="hidden" value="{{ user }}">
+
+                <input type="password"  name="updatepass" id="updatepass" value="{{ password }}">
+                <button type="submit" name="button_submit" value="yes"> ДА</button>
+                <button type="submit" name="button_submit" value="no"> НЕТ</button>
+
+{#
+
+            {% else %}
+
+
+            <label for="updatepass">ВВедите новый пароль для пользователя <input type="hidden"
+                                                                                 value="{{ user }}"/> {{ user }}</label>
+            <br>
+            <input type="password" name="updatepass" id="updatepass"
+                   placeholder=" "
+                   value="{{ request.form['updatepass'] }}"/>
+            <br>
+
+                <button type="submit" name="button_submit" value="updatepass">Обновить пароль</button>
+            {% endif %}
+
+        </form>
+
+    {% else %}
+
+
+        <form method="post" action="{{ url_for('change') }}" id="changeform">
+
+            <label for="username">Введите имя пользователя, которому хотите поменять пароль:</label>
+            <br>
+            <input type="text" name="username" id="username"
+                   placeholder=" "
+                   value="{{ request.form['username'] }}"/>
+            <br>
+
+            <button type="submit" name="button_submit" value="userinput">Ввод пользователя</button>
+        </form>
+    {% endif %}
+{% endblock %}

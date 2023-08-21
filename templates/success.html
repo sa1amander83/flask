@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% if update %}
+    <h3> Пароль пользователя успешно обновлен</h3>
+
+    {% else %}
+<h3> пользователь успешно добавлен</h3>
+  {% endif %}
+ {% endblock %}
