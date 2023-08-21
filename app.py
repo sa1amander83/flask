@@ -95,17 +95,6 @@ def adduserform():
             # flash('Вы не ввели возраст')
         if not password:
             messages.append('Вы не ввели пароль')
-            # flash('Введите пароль')
-
-            # else:
-            #     return render_template('adduser.html', messages=messages)
-            # return render_template('adduser.html', messages=messages)
-
-        #     if check_password(password,messages):
-        #         return render_template('adduser.html', messages=messages)
-        #     else:
-        #         return render_template('password.html', messages=messages)
-        #
 
         if check(password) <= 2:
             messages.append('Пароль слишком слабый')
@@ -118,9 +107,6 @@ def adduserform():
             flash('Ваш пароль сильный!')
             succsses()
             return render_template('success.html')
-
-
-
 
 
 @app.route('/checkpass/', methods=['GET', 'POST'])
@@ -168,35 +154,43 @@ def change():
         for user in users:
 
             if user[0] == username:
-                # updatepass(user[0])
+
 
                 return render_template('changepswd.html', change=True, user=user[0])
 
         else:
             flash("пользователь  с таким именем не найден, попробуйте еще раз")
             return render_template('changepswd.html')
-    # else:
-    #     return render_template('changepswd.html')
 
 
 @app.route('/updatepass/<string:username>', methods=['GET', 'POST'])
 @cross_origin(origin='localhost', headers=['Content- Type', '*'])
 def updatepass(username):
+    newpass = request.form.get('updatepass')
     if request.method == 'POST':
-        newpass = request.form.get('updatepass')
-        conn = get_db_connection()
-        cur = conn.cursor()
+        print(request.form)
+        if check(newpass) == 5 or request.form['button_submit'] == 'no':
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute("UPDATE users SET password = %s WHERE name = %s;", (newpass, username,))
+            conn.commit()
+            conn.close()
+            return render_template('success.html', update=True)
+        elif request.form['button_submit'] == 'yes':
+            return render_template('changepswd.html', change=True,user=username,  password=newpass)
 
-
-        cur.execute("UPDATE users SET password = %s WHERE name = %s;", (newpass, username,))
-        conn.commit()
-        conn.close()
-        return render_template('success.html', update=True)
+        elif check(newpass) <= 2:
+            flash('Пароль слишком слабый')
+            return render_template('changepswd.html', change=True, user=username, password=newpass)
+        elif 2 < check(newpass) < 5:
+            flash('Пароль хороший, но недостаточно... Желаете улучшить пароль?')
+            return render_template('changepswd.html', update=True, change=True,user=username, password=newpass)
 
 
 @app.route('/quit/')
 def quit():
     return render_template('quit.html')
+
 
 def check(password):
     count = 0
@@ -221,5 +215,7 @@ def check(password):
     else:
         count += 1
     return count
+
+
 if __name__ == '__main__':
     app.run()

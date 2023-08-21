@@ -6,11 +6,29 @@
 
 {% block content %}
 
-
+    {#{% for message in messages %}#}
+    {#    <p1>{{ message }}</p1>#}
+    {#    <br>#}
+    {#    {% endfor    %}#}
 
     {% if change %}
+
         <form method="post" action="{{ url_for('updatepass', username=user) }}" id="updateform">
-            <label for="updatepass">ВВедите новый пароль для пользователя <input  type="hidden" value="{{user }}"/> {{ user }}</label>
+        {% if update %}
+{#                <input method="post" action="{{ url_for('updatepass', username=user) }}" id="updateform">#}
+                <input type="hidden" value="{{ user }}"></input>
+{#                <input type="password"  name="updatepass" id="updatepass" value="{{ request.form['updatepass'] }}"></input>#}
+                <input type="password"  name="updatepass" id="updatepass" value="{{ password }}"></input>
+                <button type="submit" name="button_submit" value="yes"> ДА</button>
+                <button type="submit" name="button_submit" value="no"> НЕТ</button>
+
+{#                </form>#}
+
+            {% else %}
+
+
+            <label for="updatepass">ВВедите новый пароль для пользователя <input type="hidden"
+                                                                                 value="{{ user }}"/> {{ user }}</label>
             <br>
             <input type="password" name="updatepass" id="updatepass"
                    placeholder=" "
@@ -18,8 +36,12 @@
             <br>
 
 
-            <button type="submit" name="button_submit" value="updatepass">Обновить пароль</button>
+
+                <button type="submit" name="button_submit" value="updatepass">Обновить пароль</button>
+            {% endif %}
+
         </form>
+
     {% else %}
 
 
