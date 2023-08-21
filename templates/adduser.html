@@ -10,19 +10,14 @@
 
 
 
-{#<form method="post" action="{{ url_for("adduserform") }}" id="passform">#}
-        {#            <a href="{{ url_for('checkpass') }}" > yes</a>#}
-        {#            <a href="{{ url_for('checkpass') }}" > no</a>#}
-{##}
-{#    </form>#}
 
-{#{% else %}#}
 
 <form method="post" action="{{ url_for('adduserform') }}" id="userform">
 {% if passform %}
 
         <button type="submit" name="submit_button" value="yes"> ДА</button>
         <button type="submit" name="submit_button" value="no"> НЕТ</button>
+
            {% endif %}
 
  <form method="post" action="{{ url_for('adduserform') }}" id="userform">
@@ -65,5 +60,5 @@
 
         <button type="submit" >Ввод пользователя</button>
     </form>
-{#    {% endif %}#}
+
 {% endblock %}
